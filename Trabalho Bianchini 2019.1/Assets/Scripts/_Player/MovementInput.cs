@@ -112,16 +112,4 @@ public class MovementInput : MonoBehaviour {
 			anim.SetFloat ("InputMagnitude", Speed, StopAnimTime, Time.deltaTime);
 		}
 	}
-
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Npc"))
-        {
-            Debug.Log("Death to Player");
-        }       
-    }
-
-
 }
