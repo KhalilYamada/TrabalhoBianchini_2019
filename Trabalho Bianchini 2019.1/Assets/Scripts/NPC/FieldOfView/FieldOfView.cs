@@ -21,7 +21,7 @@ public class FieldOfView : MonoBehaviour {
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
-    public Vector3 localizacaoDoPoster;
+    public Vector3 localizacaoDoPlayer;
 
     ControllerNPC controladorNPC;
 
@@ -69,20 +69,13 @@ public class FieldOfView : MonoBehaviour {
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) && target.CompareTag("Player"))
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) && target.CompareTag("Player") && controladorNPC.buscandoPlayer == true)
                 {
                     //Aqui é aonde acontece a detecção do player
+                    controladorNPC.tempoDeEspera = Time.time + 5f;
+                    controladorNPC.playerSaiuDaVisao = true;
                     visibleTargets.Add(target);
-                    Debug.Log("Encontrei o Player");
-                    //Adicionar a forma que foi decidida para acabar o jogo
-                    //precisa mudar a Tag para o nome correto, no lugar de player ser dimitri ou o nome que for decidido
-                }
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) && target.CompareTag("Totem") && controladorNPC.buscandoTotem == true)
-                {
-                    //Aqui é aonde acontece a detecção do totem
-                    visibleTargets.Add(target);
-                    Debug.Log("Encontrei o Totem");
-                    localizacaoDoPoster = target.transform.position;
+                    localizacaoDoPlayer = target.transform.position;
                     controladorNPC.encontrou = true;
                 }
             }
