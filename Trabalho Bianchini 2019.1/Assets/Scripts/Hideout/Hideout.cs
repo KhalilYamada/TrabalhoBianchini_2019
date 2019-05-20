@@ -7,8 +7,11 @@ public class Hideout : MonoBehaviour
 
     public GameObject colisor;
 
-    
 
+    private void Start()
+    {
+        colisor.SetActive(false);
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -17,9 +20,6 @@ public class Hideout : MonoBehaviour
         {
             colisor.SetActive(true);
         }
-
-        Debug.Log("Player");
-
     }
     private void OnTriggerExit(Collider other)
     {
@@ -27,8 +27,5 @@ public class Hideout : MonoBehaviour
         {
             colisor.SetActive(false);
         }
-
-        Debug.Log("Player");
-
     }
 }
