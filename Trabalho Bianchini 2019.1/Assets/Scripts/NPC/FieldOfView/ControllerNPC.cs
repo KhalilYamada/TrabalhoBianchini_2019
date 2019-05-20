@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,8 +19,8 @@ public class ControllerNPC : MonoBehaviour
     public GameObject targetGM_Reset;
     private Vector3 target_Reset;
 
-    public GameObject targetGM_ObjetoEncontrado;
-    private Vector3 target_ObjetoEncontrado;
+    public GameObject targetGM_PlayerEncontrado;
+    private Vector3 target_PlayerEncontrado;
 
 
     //Scripts
@@ -30,13 +29,17 @@ public class ControllerNPC : MonoBehaviour
 
     //Floats
     public float tempoDeConfusao;
-
+    [HideInInspector]
+    public float tempoProcurando;
+    [HideInInspector]
+    public float tempoDeEspera = 5;
 
     //Booleans
     private bool switchBettween;
     public bool andando = true;
     public bool encontrou = false;
-    public bool buscandoTotem = true;
+    public bool buscandoPlayer = true;
+    public bool playerSaiuDaVisao = false;
 
     void Start()
     {
@@ -49,13 +52,19 @@ public class ControllerNPC : MonoBehaviour
 
     private void Update()
     {
+        tempoProcurando = Time.time;
+
         if (andando == true)
         {
             MovimentoBasico();
         }
         if (encontrou == true)
         {
-            EncontrouPoster();
+            EncontrouPlayer();
+        }
+        if (playerSaiuDaVisao == true)
+        {
+            PerdeuPlayer();
         }
     }
 
@@ -88,38 +97,42 @@ public class ControllerNPC : MonoBehaviour
                 switchBettween = true;
             }
         }
-        if (other.CompareTag("PosterHitbox"))
-        {
-            buscandoTotem = false;
-            myAgent.isStopped = true;
-            StartCoroutine(ColidiuComPoster());
 
-        }
         if (other.CompareTag("Reset"))
-        { 
+        {
             targetGM_Reset.SetActive(false);
             andando = true;
-            buscandoTotem = true;
+            buscandoPlayer = true;
         }
     }
 
-    void EncontrouPoster()
+    void EncontrouPlayer()
     {
         andando = false;
-        target_ObjetoEncontrado = campoDeVisao.localizacaoDoPoster;
-        myAgent.SetDestination(target_ObjetoEncontrado);
-        encontrou = false;
+        target_PlayerEncontrado = campoDeVisao.localizacaoDoPlayer;
+        myAgent.SetDestination(target_PlayerEncontrado);
     }
 
-
-
-    IEnumerator ColidiuComPoster()
+    
+    void PerdeuPlayer()
     {
-        //Roda Animação de Confusão
+        if(tempoProcurando >= tempoDeEspera)
+        {
+            encontrou = false;
+            buscandoPlayer = false;
+            playerSaiuDaVisao = false;
+            StartCoroutine(ResetaOMovimento());            
+        }
+    }
+    
+
+    IEnumerator ResetaOMovimento()
+    {
         yield return new WaitForSeconds(tempoDeConfusao);
         myAgent.isStopped = false;
-        targetGM_Reset.SetActive(true);
         target_Reset = targetGM_Reset.transform.position;
+        targetGM_Reset.SetActive(true);
         myAgent.SetDestination(target_Reset);
+        
     }
 }

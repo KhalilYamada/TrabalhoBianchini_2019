@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Change
   - Reset
+  - Hideout
+  - Npc
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - PostProcessing
   - Target
   - Obstacle
-  - 
-  - 
+  - NotPlayer
+  - Player
   - 
   - 
   - 
