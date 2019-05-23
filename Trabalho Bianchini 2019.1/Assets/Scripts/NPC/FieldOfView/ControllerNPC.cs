@@ -104,6 +104,11 @@ public class ControllerNPC : MonoBehaviour
             andando = true;
             buscandoPlayer = true;
         }
+
+        if (other.CompareTag("Hideout"))
+        {
+            StartCoroutine(ResetaOMovimento());
+        }
     }
 
     void EncontrouPlayer()
@@ -125,6 +130,7 @@ public class ControllerNPC : MonoBehaviour
         }
     }
     
+    
 
     IEnumerator ResetaOMovimento()
     {
@@ -132,7 +138,6 @@ public class ControllerNPC : MonoBehaviour
         myAgent.isStopped = false;
         target_Reset = targetGM_Reset.transform.position;
         targetGM_Reset.SetActive(true);
-        myAgent.SetDestination(target_Reset);
-        
+        myAgent.SetDestination(target_Reset);        
     }
 }
