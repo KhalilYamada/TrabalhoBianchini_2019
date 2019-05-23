@@ -23,5 +23,4 @@ public class KeyManager : MonoBehaviour
             porta.SetActive(false);
         }
     }
-
 }

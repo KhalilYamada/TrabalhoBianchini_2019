@@ -123,5 +123,12 @@ public class MovementInput : MonoBehaviour {
         }       
     }
 
-
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        var rb = hit.gameObject.GetComponent<Rigidbody>();        
+        if (rb != null)
+        {
+            rb.AddForce(hit.moveDirection * 20);
+        }
+    }
 }

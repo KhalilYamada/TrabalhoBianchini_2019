@@ -85,8 +85,6 @@ public class CharController : MonoBehaviour {
 
 			moveDirection = Vector3.zero;
             
-
-
             if (Input.GetKey(KeyCode.A))
             {
                 transform.Rotate(Vector3.down * mouseSensivity* 2 * Time.deltaTime);
@@ -175,10 +173,5 @@ public class CharController : MonoBehaviour {
             //key.ok4 = true;
             SceneManager.LoadScene(7);
         }
-
-
-
-
-
     }
 }

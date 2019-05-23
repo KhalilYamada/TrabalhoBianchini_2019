@@ -130,6 +130,7 @@ public class ControllerNPC : MonoBehaviour
         }
     }
     
+    
 
     IEnumerator ResetaOMovimento()
     {
