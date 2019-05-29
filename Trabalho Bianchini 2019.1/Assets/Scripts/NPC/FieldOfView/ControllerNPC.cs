@@ -22,6 +22,8 @@ public class ControllerNPC : MonoBehaviour
     public GameObject targetGM_PlayerEncontrado;
     private Vector3 target_PlayerEncontrado;
 
+    public GameObject targetGM_Origem;
+    private Vector3 target_Origem;
 
     //Scripts
     public FieldOfView campoDeVisao;
@@ -41,8 +43,15 @@ public class ControllerNPC : MonoBehaviour
     public bool buscandoPlayer = true;
     public bool playerSaiuDaVisao = false;
 
+    public bool fazRota;
+
     void Start()
     {
+        if(targetGM_Origem != null)
+        {
+            target_Origem = targetGM_Origem.transform.position;
+        }
+
         campoDeVisao = GetComponent<FieldOfView>();
         targetGM_Reset.SetActive(false);
         myAgent = GetComponent<NavMeshAgent>();
@@ -53,10 +62,12 @@ public class ControllerNPC : MonoBehaviour
     private void Update()
     {
         tempoProcurando = Time.time;
-
-        if (andando == true)
+        if(fazRota == true)
         {
-            MovimentoBasico();
+            if (andando == true)
+            {
+                MovimentoBasico();
+            }
         }
         if (encontrou == true)
         {
@@ -100,9 +111,21 @@ public class ControllerNPC : MonoBehaviour
 
         if (other.CompareTag("Reset"))
         {
+            if(fazRota == true)
+            {
+                andando = true;
+            }
+            else
+            {
+                myAgent.SetDestination(target_Origem);
+            }
             targetGM_Reset.SetActive(false);
-            andando = true;
             buscandoPlayer = true;
+        }
+
+        if (other.CompareTag("PosOrigem"))
+        {
+            Debug.Log("parou");
         }
 
         if (other.CompareTag("Hideout"))
