@@ -12,7 +12,24 @@ public class Switch : MonoBehaviour
     int currentBoxB;
 
     [SerializeField]
-    private bool ligado; 
+    private bool ligado;
+
+
+    private void Start()
+    {
+        currentBoxA = 0;
+        currentBoxB = 0;
+        if (ligado == true)
+        {
+            LigaCaixasA();
+            ligado = false;
+        }
+        else
+        {
+            LigaCaixasB();
+            ligado = true;
+        }
+    }
 
 
     private void OnTriggerStay(Collider other)
