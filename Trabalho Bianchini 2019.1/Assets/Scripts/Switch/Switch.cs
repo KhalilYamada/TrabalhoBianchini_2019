@@ -14,6 +14,7 @@ public class Switch : MonoBehaviour
     [SerializeField]
     private bool ligado;
 
+    bool emContato;
 
     private void Start()
     {
@@ -32,9 +33,9 @@ public class Switch : MonoBehaviour
     }
 
 
-    private void OnTriggerStay(Collider other)
+    void Update()
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (emContato == true && Input.GetKeyDown(KeyCode.E))
         {
             currentBoxA = 0;
             currentBoxB = 0;
@@ -50,6 +51,25 @@ public class Switch : MonoBehaviour
             }
         }
     }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            emContato = true;
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            emContato = false;
+        }
+    }
+
 
     void LigaCaixasA()
     {

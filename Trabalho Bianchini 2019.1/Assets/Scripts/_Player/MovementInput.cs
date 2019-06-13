@@ -94,8 +94,7 @@ public class MovementInput : MonoBehaviour {
 	}
 
 	void InputMagnitude() {
-		//Calculate Input Vectors
-        
+		//Calculate Input Vectors        
 		InputX = Input.GetAxis ("Horizontal");
 		InputZ = Input.GetAxis ("Vertical");
 

@@ -10,6 +10,7 @@ TagManager:
   - Npc
   - KeyManager
   - PosOrigem
+  - Trigger
   layers:
   - Default
   - TransparentFX
